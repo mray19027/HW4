@@ -10,6 +10,12 @@ int compare(int a, int b) {
 	    return a - b;
 }
 
+int compare_wrapper(const void* a, const void* b) {
+	int *a_n = (int *)a;
+	int *b_n = (int *)b;
+	return compare(*a_n, *b_n);
+}
+
 void bubble_sort(int *numbers, unsigned count) {
 	int temp;
 	int i, j;
@@ -57,5 +63,9 @@ void insertion_sort(int *numbers, unsigned count) {
 	memcpy(numbers, new, count*sizeof(int));
 }
 
-sorting_fn sorting_fns[] = {bubble_sort, insertion_sort, NULL};
+void q_sort(int *numbers, unsigned count) {
+	qsort(numbers, count, sizeof(int), compare_wrapper);
+}
+
+sorting_fn sorting_fns[] = {bubble_sort, insertion_sort, q_sort};
 
